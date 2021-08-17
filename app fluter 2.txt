@@ -1,0 +1,242 @@
+import 'package: flutter / material.dart';
+class  PaymentScreen  extends  StatelessWidget { 
+  const PaymentScreen ({Key key}): super (key: key);
+  @override
+   Widget build (BuildContext context) { 
+    return Scaffold ( 
+      appBar: AppBar ( 
+        title: Text ('Forms'), 
+      ), 
+      body: PaymentForm (), 
+    ); 
+  } 
+}
+
+classe  PaymentForm  extends  StatefulWidget { 
+  PaymentForm ({Key key}): super (key: key);
+  @override
+   _PaymentFormState createState () => _PaymentFormState (); 
+}
+classe  _PaymentFormState  extends  State < PaymentForm > { 
+  final _formKey = GlobalKey <FormState> ();
+  @override
+   Widget build (BuildContext context) { 
+    return Container ( 
+      child: Form ( 
+        key: _formKey, 
+        child: ListView ( 
+          children: <Widget> [ 
+            Column (), // vamos trabalhar aqui
+           ], 
+        ), 
+      ), 
+    ); 
+  } 
+}
+
+class Payment {
+  Address address;
+  CardDetails cardDetails;
+  Payment({this.address, this.cardDetails});
+}
+class CardDetails {
+  String cardHolderName;
+  String cardNumber;
+  String expiryMonth;
+  String expiryYear;
+  int securityCode;
+  CardDetails(
+      {this.cardHolderName,
+      this.cardNumber,
+      this.expiryMonth,
+      this.expiryYear,
+      this.securityCode});
+}
+class Address {
+  String postCode;
+  String addressLine;
+  Address({this.postCode, this.addressLine});
+}
+
+class _PaymentFormState extends State<PaymentForm> {
+  final _formKey = GlobalKey<FormState>();
+  CardDetails _cardDetails = new CardDetails();
+  
+children: <Widget>[
+  TextFormField(
+    onSaved: (val) => _cardDetails.cardHolderName = val,
+    decoration: InputDecoration(
+        labelText: 'Name on card',
+        icon: Icon(Icons.account_circle),
+    ),
+  ),
+]
+
+TextFormField(
+  onSaved: (val) => _cardDetails.cardNumber = val,
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: 'Card number',
+    icon: Icon(Icons.credit_card),
+  ),
+),
+TextFormField(
+  onSaved: (val) => _cardDetails.securityCode = int.parse(val),
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: 'Security Code',
+    icon: Icon(Icons.lock_outline),
+  ),
+  maxLength: 4,
+),
+
+classe  _PaymentFormState  extends  State < PaymentForm > { 
+  final _formKey = GlobalKey <FormState> (); 
+  CardDetails _cardDetails = new CardDetails (); 
+  String expiryMonth; 
+  final da nova linha yearsList = 
+      List.generate (12, (int index) => index + 2020)
+ DropdownButtonFormField <String> ( 
+  onSaved: (val) => _cardDetails.expiryMonth = val, 
+  value: expiryMonth, 
+  items: [ 
+    'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 
+    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' 
+  ] .map <DropdownMenuItem <String>> ( 
+    (String val) { 
+      return DropdownMenuItem ( 
+        filho : Texto (val), 
+        valor: val, 
+      ); 
+    }, 
+  ) .toList (), 
+  onChanged: (val) { 
+    setState (() { 
+      expiryMonth = val; 
+    }); 
+  }, 
+  decoração:InputDecoration ( 
+    labelText: 'Mês de expiração',
+    ícone: Ícone (Icons.calendar_today), 
+  ), 
+),
+DropdownButtonFormField ( 
+  onSaved: (val) => _cardDetails.expiryYear = val.toString (), 
+  valor: expiryYear, 
+  itens: yearsList.map <DropdownMenuItem> ( 
+    (val) { 
+      retornar DropdownMenuItem ( 
+        filho: Texto (val.toString ()), 
+        valor: val.toString (), 
+      ); 
+    }, 
+  ) .toList (), 
+  onChanged: (val) { 
+    setState (() { 
+      expiryYear = val.toString (); 
+    }); 
+  }, 
+  decoração: InputDecoration ( 
+    labelText: 'Expiry Ano ', 
+    ícone: Ícone (Icons.calendar_today), 
+  ), 
+),
+TextFormField(
+  onSaved: (val) => _paymentAddress.postCode = val,
+  decoration: InputDecoration(
+      labelText: 'Post Code', icon: Icon(Icons.location_on)),
+),
+TextFormField(
+  onSaved: (val) => _paymentAddress.addressLine = val,
+  decoration: InputDecoration(
+      labelText: 'Address Line', icon: Icon(Icons.location_city)),
+),
+CheckboxListTile(
+  value: rememberInfo,
+  onChanged: (val) {
+    setState(() {
+      rememberInfo = val;
+    });
+  },
+  title: Text('Remember Information'),
+),
+RaisedButton(
+  child: Text('Process Payment'),
+  color: Colors.pinkAccent,
+  textColor: Colors.white,
+  onPressed: () {
+    print('Payment Complete');
+  },
+),
+
+validator: (value) {
+  if (value.isEmpty) return "This form value must be filled";
+  return null;
+},
+
+TextFormField(
+  onSaved: (val) => _cardDetails.cardNumber = val,
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: 'Card number',
+    icon: Icon(Icons.credit_card),
+  ),
+  
+  validator: (value) {
+    if (value.isEmpty) return "This form value must be filled";
+    if (value.length != 16) return "Please enter a valid number";
+    return null;
+  },
+),
+
+class _PaymentFormState extends State<PaymentForm> {
+  
+  String expiryMonth;
+  String expiryYear;
+  final List yearsList = List.generate(12, (int index) => index + 2020);
+  Map<String, bool> touched = {
+    "cardNumberField": false,
+  };
+  
+  autovalidate: touched['cardNumberField'],
+  
+  onChanged: (value) {
+  setState(() {
+    touched['cardNumberField'] = true;
+  });
+},
+
+TextFormField(
+  onSaved: (val) => _cardDetails.cardNumber = val,
+  controller: _cardNumberController,  
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: 'Card number',
+    icon: Icon(Icons.credit_card),
+  ),
+  onChanged: (value) {
+    setState(() {
+      touched['cardNumberField'] = true;
+    });
+  },
+  autovalidate: touched['cardNumberField'],
+  validator: (value) {
+    if (value.isEmpty) return "This form value must be filled";
+    if (value.length != 16) return "Please enter a valid number";
+    return null;
+  },
+),
+
+nPressed: () async {
+  var validCardNumber =
+    await validCardNumberCheck(_cardNumberController.text);
+  if (_formKey.currentState.validate() && validCardNumber) {
+    _formKey.currentState.save();
+    Payment payment = new Payment(
+      address: _paymentAddress,
+      cardDetails: _cardDetails,
+    );
+    handlePayment(payment); 
+    print(payment.cardDetails.cardHolderName);
+  }
+},
